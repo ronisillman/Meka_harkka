@@ -1,0 +1,336 @@
+html,
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding: 0px;
+    background-color: #ffffff;
+}
+
+#main {
+    width: 100%;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+    overflow: hidden;
+    background-color: #5ea9cc;
+    padding: 25px 20px;
+    position: fixed;
+    /* add this line */
+    top: 0;
+    /* add this line */
+    z-index: 100;
+    /* add this line */
+}
+
+/* Style the header links */
+.header a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 5px;
+    border-radius: 10px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Float the link section to the right */
+.header-right {
+    float: right;
+}
+
+
+#buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    /* Adjusts the space between the buttons */
+}
+
+.buttons {
+    font-size: 2vh;
+    width: 50%;
+    margin: 1vh;
+    margin-top: 10vh;
+    border-radius: 20px;
+    background-color: #2b82c9;
+    /* Green background */
+    border: none;
+    /* Remove borders */
+    color: white;
+    /* White text */
+    padding: 8px 15px;
+    /* Some padding */
+    text-align: center;
+    /* Centered text */
+    text-decoration: none;
+    /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    /* Transition effects */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    /* Reduced from 60px */
+    height: 22px;
+    /* Reduced from 34px */
+    margin-left: 10px;
+    /* New line: Adds a gap between the text and the toggle */
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    /* Reduced from 26px */
+    width: 18px;
+    /* Reduced from 26px */
+    left: 2px;
+    /* Reduced from 4px */
+    bottom: 2px;
+    /* Reduced from 4px */
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(18px);
+    /* Reduced from 26px */
+    -ms-transform: translateX(18px);
+    /* Reduced from 26px */
+    transform: translateX(18px);
+    /* Reduced from 26px */
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#char1 {
+    display: inline-block;
+    vertical-align: top;
+    /* Aligns the top edge of the element with the top of the tallest element on the line */
+}
+
+.wrap {
+    min-height: 40vh;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .half {
+        width: 60%;
+        padding: 8px 0;
+        /* Reduced the vertical padding */
+    }
+}
+
+.readout {
+    margin-top: 20px;
+    line-height: 1.4;
+    font-size: 1.0em;
+    color: #333;
+}
+
+#values {
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    font-size: 1.0em;
+    color: #333;
+}
+
+#hexInput {
+    width: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 0;
+    margin: 0;
+}
+
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+    padding: 4px;
+    margin: 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    line-height: 1;
+}
+
+
+label {
+    font-size: 16px;
+    margin: 6px 0;
+    line-height: 1;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 4px;
+    margin: 2px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#char1,
+#char2,
+#char3 {
+    font-family: 'Courier New', monospace;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+}
+
+.toggle-container label[for="toggle1"] {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.switch {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.submit-button {
+    font-size: 2vh;
+    width: 60%;
+    margin: 1vh;
+    border-radius: 20px;
+    background-color: #2b82c9;
+    /* Green background */
+    border: none;
+    /* Remove borders */
+    color: white;
+    /* White text */
+    padding: 8px 10px;
+    /* Some padding */
+    text-align: center;
+    /* Centered text */
+    text-decoration: none;
+    /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    /* Transition effects */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+}
+
+#message {
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: -15px;
+    padding: 0px;
+}
+
+.aligned-text {
+    padding-right: 80px;
+    text-align: right;
+}
+
+#min {
+    color: #333;
+}
+
+#max {
+    color: #333;
+}
+
+/*
+#char1-display {
+    display: inline-block;
+    width: 150px;
+    /* Adjust width as needed */
+/*vertical-align: top;
+    /* Aligns the top edge of the element with the top of the tallest element on the line */
+/*
+} 
+*/

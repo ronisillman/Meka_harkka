@@ -33,6 +33,10 @@ export async function connect() {
         const char1value = document.getElementById("char1");
         const char2value = document.getElementById("char2");
         const char3value = document.getElementById("char3");
+
+        let min = Infinity;
+        let max = -Infinity;
+
         await BleClient.startNotifications(
             deviceObject.deviceId,
             "19B10000-E8F2-537E-4F6C-D104768A1214", // Service UUID
@@ -228,7 +232,7 @@ colorPicker.on(["color:init", "color:change"], function (color) {
     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
     values.innerHTML = [
         //"hex: " + color.hexString,
-        "rgb: " + color.rgbString,
+        color.rgbString,
     ].join("<br>");
     hexInput.value = color.hexString;
 
