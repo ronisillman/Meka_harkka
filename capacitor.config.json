@@ -1,0 +1,12 @@
+{
+  "appId": "com.roni_s.myapp",
+  "appName": "Kierroslukumittari",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "scheme": "Kierroslukumittari"
+}

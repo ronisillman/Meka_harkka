@@ -1,0 +1,162 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#main {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+}
+
+#title {
+  margin-top: 15%;
+  font-size: 3vh;
+}
+
+#buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  /* Adjusts the space between the buttons */
+}
+
+.buttons {
+  font-size: 2vh;
+  width: 50%;
+  /* Adjust the width as needed */
+  margin: 1vh;
+  border-radius: 20px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  /* Reduced from 60px */
+  height: 22px;
+  /* Reduced from 34px */
+  margin-left: 10px;
+  /* New line: Adds a gap between the text and the toggle */
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  /* Reduced from 26px */
+  width: 18px;
+  /* Reduced from 26px */
+  left: 2px;
+  /* Reduced from 4px */
+  bottom: 2px;
+  /* Reduced from 4px */
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #2196F3;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(18px);
+  /* Reduced from 26px */
+  -ms-transform: translateX(18px);
+  /* Reduced from 26px */
+  transform: translateX(18px);
+  /* Reduced from 26px */
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#char1-display {
+  display: inline-block;
+  width: 150px;
+  /* Adjust width as needed */
+  vertical-align: top;
+  /* Aligns the top edge of the element with the top of the tallest element on the line */
+}
+
+#char1 {
+  display: inline-block;
+  vertical-align: top;
+  /* Aligns the top edge of the element with the top of the tallest element on the line */
+}
+
+.wrap {
+  min-height: 40vh;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .half {
+    width: 60%;
+    padding: 8px 0;
+    /* Reduced the vertical padding */
+  }
+}
+
+.readout {
+  margin-top: 0px;
+  /* Reduced the top margin */
+  line-height: 120%;
+}
+
+#values {
+  font-family: monospace;
+  line-height: 150%;
+}
+
+#hexInput {
+  width: 80px;
+  /* Adjust this value to your liking */
+}
+
+#min {
+  margin-right: 50px;
+}

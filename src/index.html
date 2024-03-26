@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Awesome Capacitor App</title>
+  <meta name="viewport"
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <script type="module"
+    src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"></script>
+  <script nomodule
+    src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"></script>
+
+  <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <meta name="theme-color" content="#31d53d" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="title">
+      Moottoripyörän kierroslukumittari
+    </div>
+    <div id="buttonContainer">
+      <button id="button1" class="buttons">Yhdistä laitteeseen</button>
+      <button id="button2" class="buttons">Katkaise yhteys</button>
+    </div>
+    <p id="connectionStatus"></p>
+    <form id="myForm">
+      <label for="numberInput">Tyhjäkäynnin kierrokset:</label><br>
+      <input type="number" id="numberInput" name="numberInput" min="0"><br>
+      <div id="message"></div><br>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="toggle-container">
+      <label for="toggle1">Telemetrian tallennus:</label>
+      <label class="switch">
+        <input type="checkbox" id="toggle1">
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div id="char1-display">
+      Kierrosluku: <span id="char1"></span>
+    </div>
+    <div>
+      <span id="min">min:<span id="char2"></span></span> <span id="max">max:<span id="char3"></span></span>
+    </div>
+    <div class="wrap">
+      <div class="half">
+        <div class="colorPicker"></div>
+      </div>
+      <div class="half readout">
+        <p>RGB - lednauhan värin valinta.</p>
+        <span class="title">Valittu väri:</span>
+        <div id="values"></div>
+        <label for="hexInput">hex:</label>
+        <input id="hexInput">
+        <p id="validationMessage"></p>
+      </div>
+    </div>
+  </div>
+  <script src="./js/testi.js" type="module"></script>
+</body>
+
+</html>
