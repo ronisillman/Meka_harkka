@@ -324,13 +324,29 @@ input[type="submit"]:hover {
     color: #333;
 }
 
-/*
-#char1-display {
+.info-box {
+    display: none;
+    position: fixed;
+    top: 63px;
+    /* Adjust this to the height of your header */
+    width: 300px;
+    height: 150px;
+    background-color: #ffffff;
+    border: 1px solid #888;
+    z-index: 1;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: rgb(0, 0, 0);
+}
+
+.info-box.visible {
+    display: block;
+}
+
+.textbtn {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
     display: inline-block;
-    width: 150px;
-    /* Adjust width as needed */
-/*vertical-align: top;
-    /* Aligns the top edge of the element with the top of the tallest element on the line */
-/*
-} 
-*/
+    margin: 0px;
+}

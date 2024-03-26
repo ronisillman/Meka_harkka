@@ -189,12 +189,28 @@ toggle1.addEventListener('change', () => {
 const button1 = document.getElementById("button1");
 button1.addEventListener('click', () => {
     connect();
-})
+});
 
 const button2 = document.getElementById("button2");
 button2.addEventListener('click', () => {
     disConnect();
-})
+});
+
+const button3 = document.getElementById('button3');
+const infoBox = document.getElementById('infoBox');
+button3.addEventListener('click', (event) => {
+    console.log('Tietoa clicked');
+    infoBox.classList.add('visible');
+    event.stopPropagation(); // Prevents the event from bubbling up to the document
+});
+
+infoBox.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevents the event from bubbling up to the document
+});
+
+document.addEventListener('click', () => {
+    infoBox.classList.remove('visible');
+});
 
 var colorPicker = new iro.ColorPicker(".colorPicker", {
     // color picker options
