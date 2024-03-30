@@ -178,9 +178,8 @@ input:checked+.slider:before {
 }
 
 .wrap {
-    min-height: 40vh;
     max-width: 720px;
-    margin: 0 auto;
+    margin: 20px auto;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -194,7 +193,7 @@ input:checked+.slider:before {
 }
 
 .readout {
-    margin-top: 20px;
+    margin-top: 10px;
     line-height: 1.4;
     font-size: 1.0em;
     color: #333;
@@ -219,7 +218,7 @@ form {
     flex-direction: column;
     width: 80%;
     padding: 0;
-    margin: 0;
+    margin-top: 8px;
 }
 
 
@@ -261,10 +260,11 @@ input[type="submit"]:hover {
 
 #char1,
 #char2,
-#char3 {
+#char3,
+#char4 {
     font-family: 'Courier New', monospace;
     background-color: #f8f8f8;
-    padding: 10px;
+    padding: 0 10px;
     border-radius: 5px;
     color: #333;
 }
@@ -349,4 +349,11 @@ input[type="submit"]:hover {
     cursor: pointer;
     display: inline-block;
     margin: 0px;
+}
+
+.map {
+    margin: 0;
+    height: 80vh;
+    width: 100%;
+    font-family: sans-serif;
 }

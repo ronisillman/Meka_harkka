@@ -17,6 +17,7 @@
   <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="stylesheet" href="./css/testi.css" />
+  <link rel="stylesheet" href="/ol.css">
   <meta name="theme-color" content="#31d53d" />
 </head>
 
@@ -34,8 +35,10 @@
     </div>
     <p id="connectionStatus"></p>
     <form id="myForm">
-      <label for="numberInput">Tyhjäkäynnin kierrokset:</label><br>
+      <label for="numberInput">Tyhjäkäynnin kierrokset:</label>
       <input type="number" id="numberInput" name="numberInput" min="0"><br>
+      <label for="maxkierrokset">Max kierrokset:</label>
+      <input type="number" id="maxkierrokset" name="maxkierrokset" min="0"><br>
       <div id="message" class="message"></div><br>
       <button type="submit" class="submit-button">Lähetä kierrokset</button>
     </form>
@@ -50,14 +53,22 @@
       <tr>
         <td>Kierrosluku:</td>
         <td><span id="char1"></span></td>
+        <td></td>
       </tr>
       <tr>
-        <td>min:</td>
+        <td>Min:</td>
         <td><span id="char2"></span></td>
+        <td></td>
       </tr>
       <tr>
-        <td>max:</td>
+        <td>Max:</td>
         <td><span id="char3"></span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Nopeus:</td>
+        <td><span id="char4"></span></td>
+        <td>m/s</td>
       </tr>
     </table>
     <div class="wrap">
@@ -73,11 +84,13 @@
         <p id="validationMessage"></p>
       </div>
     </div>
+    <div id="map" class="map"></div>
+    <div id="location" class="marker"><span class="icon-flag"></span></div>
   </div>
   <div id="infoBox" class="info-box">
     <p>Moottoripyörän kierroslukumittari.</p>
     <p>Yhdistä Arduino nano 33 Ble:hen, jonka nimi on Kierroslukumittari.</p>
-    <p>App versio 1.0</p>
+    <p>Sovellus versio 2.0.</p>
   </div>
 
   <script src="./js/testi.js" type="module"></script>

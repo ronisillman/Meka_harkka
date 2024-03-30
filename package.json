@@ -15,11 +15,14 @@
   "dependencies": {
     "@capacitor-community/bluetooth-le": "^3.1.2",
     "@capacitor/android": "^5.7.4",
+    "@capacitor/app": "^5.0.7",
     "@capacitor/camera": "latest",
     "@capacitor/core": "latest",
+    "@capacitor/geolocation": "^5.0.7",
     "@capacitor/ios": "^5.7.4",
     "@capacitor/splash-screen": "latest",
-    "@jaames/iro": "^5.5.2"
+    "@jaames/iro": "^5.5.2",
+    "ol": "^9.1.0"
   },
   "devDependencies": {
     "@capacitor/cli": "latest",
