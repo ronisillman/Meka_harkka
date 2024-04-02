@@ -165,7 +165,7 @@ export async function connect() {
             "19B10003-E8F2-537E-4F6C-D104768A1214", // Characteristic UUID
             (value) => {
                 const receivedValue = value.getUint16(0, true);
-                console.log("Value received: ", receivedValue);
+                //console.log("Value received: ", receivedValue);
                 min = Math.min(min, receivedValue);
                 max = Math.max(max, receivedValue);
                 char1value.innerHTML = receivedValue.toString();
@@ -317,7 +317,7 @@ async function writeData5(value) {
     const buffer = new ArrayBuffer(bufferSize);
     const dataView = new DataView(buffer);
 
-    dataView.setUint8(0, value, true);
+    dataView.setUint16(0, value, true);
 
     console.log("Sending data:", dataView.getUint8(0));
 
@@ -325,7 +325,7 @@ async function writeData5(value) {
         deviceObject.deviceId,
         "19B10000-E8F2-537E-4F6C-D104768A1214",
         "19B10007-E8F2-537E-4F6C-D104768A1214",
-        byteArray
+        dataView
     );
 }
 
@@ -380,7 +380,7 @@ const char5 = document.getElementById('char5');
 slider.addEventListener('input', function() {
     const mappedValue = Math.round((this.value / 255) * 100);
     char5.textContent = mappedValue;
-    writeData5(this.value);
+    throttledWriteData5(this.value);
 });
 
 slider.dispatchEvent(new Event('input'));
@@ -413,7 +413,9 @@ function throttle(func, limit) {
         }
     }
 }
+
 let throttledWriteData3 = throttle(writeData3, 300); // Adjust the delay as needed
+let throttledWriteData5 = throttle(writeData5, 100);
 
 // https://iro.js.org/guide.html#color-picker-events
 colorPicker.on(["color:init", "color:change"], function (color) {

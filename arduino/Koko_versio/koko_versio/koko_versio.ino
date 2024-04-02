@@ -29,7 +29,7 @@ volatile bool runThread = false;
 uint16_t dataToSend = 1;
 uint32_t RGB_data;
 uint16_t kierrokset_max;
-uint8_t kirkkaus_data;
+uint16_t kirkkaus_data;
 
 // SD  **************
 File myFile;

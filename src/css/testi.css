@@ -379,14 +379,14 @@ td:nth-child(2), th:nth-child(2) {
 }
 
 td:nth-child(3), th:nth-child(3) {
-    width: 27px; /* Width of the third column */
+    width: 30px; /* Width of the third column */
 }
 
 .slider-container {
     margin-top: 20px;
     margin-bottom: 30px;
     display: grid;
-    grid-template-columns: 147px 55px 18px auto; /* Adjust as needed */
+    grid-template-columns: 147px 55px 16px auto; /* Adjust as needed */
     gap: 15px; /* Adjust as needed */
     width: 90%;
     align-items: center;
