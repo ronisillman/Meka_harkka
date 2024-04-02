@@ -179,7 +179,8 @@ input:checked+.slider:before {
 
 .wrap {
     max-width: 720px;
-    margin: 20px auto;
+    margin-top: 20px;
+    margin-bottom: 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -352,8 +353,70 @@ input[type="submit"]:hover {
 }
 
 .map {
-    margin: 0;
+    margin-top: 0;
     height: 80vh;
     width: 100%;
     font-family: sans-serif;
 }
+
+table {
+    width: 250px;
+    table-layout: fixed;
+}
+
+td, th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td:nth-child(1), th:nth-child(1) {
+    width: 90px; /* Width of the first column */
+}
+
+td:nth-child(2), th:nth-child(2) {
+    width: 60px; /* Width of the second column */
+}
+
+td:nth-child(3), th:nth-child(3) {
+    width: 27px; /* Width of the third column */
+}
+
+.slider-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 147px 55px 18px auto; /* Adjust as needed */
+    gap: 15px; /* Adjust as needed */
+    width: 90%;
+    align-items: center;
+}
+  
+#rangeslider {
+    margin-right: 32px;
+
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    width: 76%; /* Full width */
+    height: 15px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    transition: opacity .2s; /* Transition effect when hovering (optional) */
+    margin-right: 32px;
+}
+
+  
+  #rangeslider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #2196F3;; /* Green background */
+  }
+  
+  #rangeslider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #2196F3;; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }

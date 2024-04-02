@@ -18,7 +18,6 @@ import Stroke from 'ol/style/Stroke';
 import { getDistance as getSphereDistance } from 'ol/sphere';
 
 let previousLocation = null;
-let previousTime = null;
 let map = null;
 let vectorSource = null;
 let iconFeature;
@@ -39,7 +38,7 @@ const attribution = new Attribution({
 });
 
 const initializeMap = async () => {
-    const position = await Geolocation.getCurrentPosition();
+    const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
     const { latitude, longitude } = position.coords;
 
     console.log('Current latitude:', latitude);
@@ -86,7 +85,6 @@ const initializeMap = async () => {
     });
 
     previousLocation = fromLonLat([longitude, latitude]);
-    previousTime = Date.now();
 
     function checkSize() {
         const small = map.getSize()[0] < 600;
@@ -101,20 +99,18 @@ const initializeMap = async () => {
 
 initializeMap().then(() => {
     setInterval(async () => {
-        const position = await Geolocation.getCurrentPosition();
+        const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
         const { latitude, longitude } = position.coords;
         const currentLocation = fromLonLat([longitude, latitude]);
-        const currentTime = Date.now();
 
-        const distance = getSphereDistance(previousLocation, currentLocation);
-        const time = (currentTime - previousTime) / 1000; // convert milliseconds to seconds
-
-        const velocity = distance / time; // in meters per second
-
-        console.log('Velocity:', velocity, 'm/s');
+        const velocity = position.coords.speed;
 
         const char4value = document.getElementById("char4");
-        char4value.innerHTML = velocity.toString();
+        if (velocity !== null) {
+            char4value.innerHTML = velocity.toFixed(2);
+        } else {
+            char4value.innerHTML = "null";
+        }
 
         drawLine(vectorSource, previousLocation, currentLocation);
 
@@ -122,7 +118,6 @@ initializeMap().then(() => {
         iconFeature.setGeometry(new Point(currentLocation));
 
         previousLocation = currentLocation;
-        previousTime = currentTime;
     }, 1000);
 });
 
@@ -317,6 +312,23 @@ async function writeData4(value) {
     );
 }
 
+async function writeData5(value) {
+    const bufferSize = 20;
+    const buffer = new ArrayBuffer(bufferSize);
+    const dataView = new DataView(buffer);
+
+    dataView.setUint8(0, value, true);
+
+    console.log("Sending data:", dataView.getUint8(0));
+
+    await BleClient.write(
+        deviceObject.deviceId,
+        "19B10000-E8F2-537E-4F6C-D104768A1214",
+        "19B10007-E8F2-537E-4F6C-D104768A1214",
+        byteArray
+    );
+}
+
 function onDisconnect(deviceId) {
     console.log(`device ${deviceId} disconnected`);
     isConnected = false; // Update connection status on error
@@ -359,6 +371,19 @@ infoBox.addEventListener('click', (event) => {
 document.addEventListener('click', () => {
     infoBox.classList.remove('visible');
 });
+
+// Get the slider and char5 elements
+const slider = document.getElementById('rangeslider');
+const char5 = document.getElementById('char5');
+
+// Add an input event listener to the slider
+slider.addEventListener('input', function() {
+    const mappedValue = Math.round((this.value / 255) * 100);
+    char5.textContent = mappedValue;
+    writeData5(this.value);
+});
+
+slider.dispatchEvent(new Event('input'));
 
 var colorPicker = new iro.ColorPicker(".colorPicker", {
     // color picker options
