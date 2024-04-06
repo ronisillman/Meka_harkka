@@ -1,162 +1,422 @@
 html,
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0;
+}
+
 body {
-  padding: 0;
-  margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding: 0px;
+    background-color: #ffffff;
 }
 
 #main {
-  width: 100%;
-  display: flex;
-  position: absolute;
-  flex-direction: column;
-  align-items: center;
+    width: 100%;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
 }
 
-#title {
-  margin-top: 15%;
-  font-size: 3vh;
+.header {
+    width: 100%;
+    overflow: hidden;
+    background-color: #5ea9cc;
+    padding: 25px 20px;
+    position: fixed;
+    /* add this line */
+    top: 0;
+    /* add this line */
+    z-index: 100;
+    /* add this line */
 }
+
+/* Style the header links */
+.header a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 5px;
+    border-radius: 10px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Float the link section to the right */
+.header-right {
+    float: right;
+}
+
 
 #buttonContainer {
-  display: flex;
-  justify-content: space-between;
-  /* Adjusts the space between the buttons */
+    display: flex;
+    justify-content: space-between;
+    /* Adjusts the space between the buttons */
 }
 
 .buttons {
-  font-size: 2vh;
-  width: 50%;
-  /* Adjust the width as needed */
-  margin: 1vh;
-  border-radius: 20px;
+    font-size: 2vh;
+    width: 50%;
+    margin: 1vh;
+    margin-top: 10vh;
+    border-radius: 20px;
+    background-color: #2b82c9;
+    /* Green background */
+    border: none;
+    /* Remove borders */
+    color: white;
+    /* White text */
+    padding: 8px 15px;
+    /* Some padding */
+    text-align: center;
+    /* Centered text */
+    text-decoration: none;
+    /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    /* Transition effects */
+    cursor: pointer;
+    /* Pointer cursor on hover */
 }
 
 /* The switch - the box around the slider */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  /* Reduced from 60px */
-  height: 22px;
-  /* Reduced from 34px */
-  margin-left: 10px;
-  /* New line: Adds a gap between the text and the toggle */
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    /* Reduced from 60px */
+    height: 22px;
+    /* Reduced from 34px */
+    margin-left: 10px;
+    /* New line: Adds a gap between the text and the toggle */
 }
 
 /* Hide default HTML checkbox */
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 /* The slider */
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  /* Reduced from 26px */
-  width: 18px;
-  /* Reduced from 26px */
-  left: 2px;
-  /* Reduced from 4px */
-  bottom: 2px;
-  /* Reduced from 4px */
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+    position: absolute;
+    content: "";
+    height: 18px;
+    /* Reduced from 26px */
+    width: 18px;
+    /* Reduced from 26px */
+    left: 2px;
+    /* Reduced from 4px */
+    bottom: 2px;
+    /* Reduced from 4px */
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 input:checked+.slider {
-  background-color: #2196F3;
+    background-color: #2196F3;
 }
 
 input:focus+.slider {
-  box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #2196F3;
 }
 
 input:checked+.slider:before {
-  -webkit-transform: translateX(18px);
-  /* Reduced from 26px */
-  -ms-transform: translateX(18px);
-  /* Reduced from 26px */
-  transform: translateX(18px);
-  /* Reduced from 26px */
+    -webkit-transform: translateX(18px);
+    /* Reduced from 26px */
+    -ms-transform: translateX(18px);
+    /* Reduced from 26px */
+    transform: translateX(18px);
+    /* Reduced from 26px */
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+    border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .toggle-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-#char1-display {
-  display: inline-block;
-  width: 150px;
-  /* Adjust width as needed */
-  vertical-align: top;
-  /* Aligns the top edge of the element with the top of the tallest element on the line */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 #char1 {
-  display: inline-block;
-  vertical-align: top;
-  /* Aligns the top edge of the element with the top of the tallest element on the line */
+    display: inline-block;
+    vertical-align: top;
+    /* Aligns the top edge of the element with the top of the tallest element on the line */
 }
 
 .wrap {
-  min-height: 40vh;
-  max-width: 720px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+    max-width: 720px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 
-  .half {
-    width: 60%;
-    padding: 8px 0;
-    /* Reduced the vertical padding */
-  }
+    .half {
+        width: 60%;
+        padding: 8px 0;
+        /* Reduced the vertical padding */
+    }
 }
 
 .readout {
-  margin-top: 0px;
-  /* Reduced the top margin */
-  line-height: 120%;
+    margin-top: 10px;
+    line-height: 1.4;
+    font-size: 1.0em;
+    color: #333;
 }
 
 #values {
-  font-family: monospace;
-  line-height: 150%;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    font-size: 1.0em;
+    color: #333;
 }
 
 #hexInput {
-  width: 80px;
-  /* Adjust this value to your liking */
+    width: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 0;
+    margin-top: 8px;
+}
+
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+    padding: 4px;
+    margin: 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    line-height: 1;
+}
+
+
+label {
+    font-size: 16px;
+    margin: 6px 0;
+    line-height: 1;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 4px;
+    margin: 2px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#char1,
+#char2,
+#char3,
+#char4 {
+    font-family: 'Courier New', monospace;
+    background-color: #f8f8f8;
+    padding: 0 10px;
+    border-radius: 5px;
+    color: #333;
+}
+
+.toggle-container label[for="toggle1"] {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.switch {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.submit-button {
+    font-size: 2vh;
+    width: 60%;
+    margin: 1vh;
+    border-radius: 20px;
+    background-color: #2b82c9;
+    /* Green background */
+    border: none;
+    /* Remove borders */
+    color: white;
+    /* White text */
+    padding: 8px 10px;
+    /* Some padding */
+    text-align: center;
+    /* Centered text */
+    text-decoration: none;
+    /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    /* Transition effects */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+}
+
+#message {
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: -15px;
+    padding: 0px;
+}
+
+.aligned-text {
+    padding-right: 80px;
+    text-align: right;
 }
 
 #min {
-  margin-right: 50px;
+    color: #333;
 }
+
+#max {
+    color: #333;
+}
+
+.info-box {
+    display: none;
+    position: fixed;
+    top: 63px;
+    /* Adjust this to the height of your header */
+    width: 300px;
+    height: 150px;
+    background-color: #ffffff;
+    border: 1px solid #888;
+    z-index: 1;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: rgb(0, 0, 0);
+}
+
+.info-box.visible {
+    display: block;
+}
+
+.textbtn {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0px;
+}
+
+.map {
+    margin-top: 0;
+    height: 80vh;
+    width: 100%;
+    font-family: sans-serif;
+}
+
+table {
+    width: 250px;
+    table-layout: fixed;
+}
+
+td, th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td:nth-child(1), th:nth-child(1) {
+    width: 90px; /* Width of the first column */
+}
+
+td:nth-child(2), th:nth-child(2) {
+    width: 60px; /* Width of the second column */
+}
+
+td:nth-child(3), th:nth-child(3) {
+    width: 30px; /* Width of the third column */
+}
+
+.slider-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 147px 55px 16px auto; /* Adjust as needed */
+    gap: 15px; /* Adjust as needed */
+    width: 90%;
+    align-items: center;
+}
+  
+#rangeslider {
+    margin-right: 32px;
+
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    width: 76%; /* Full width */
+    height: 15px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    transition: opacity .2s; /* Transition effect when hovering (optional) */
+    margin-right: 32px;
+}
+
+  
+  #rangeslider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #2196F3;; /* Green background */
+  }
+  
+  #rangeslider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #2196F3;; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }

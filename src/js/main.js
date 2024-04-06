@@ -1,5 +1,127 @@
 import { BleClient } from '@capacitor-community/bluetooth-le';
 import iro from '@jaames/iro';
+import { Geolocation } from '@capacitor/geolocation';
+import OSM from 'ol/source/OSM';
+import TileLayer from 'ol/layer/Tile';
+import { Map, View } from 'ol';
+import { fromLonLat } from 'ol/proj';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
+import { Capacitor } from '@capacitor/core';
+import { Attribution, defaults as defaultControls } from 'ol/control.js';
+import LineString from 'ol/geom/LineString';
+import Stroke from 'ol/style/Stroke';
+import { getDistance as getSphereDistance } from 'ol/sphere';
+
+let previousLocation = null;
+let map = null;
+let vectorSource = null;
+let iconFeature;
+
+function drawLine(source, start, end) {
+    const lineFeature = new Feature(new LineString([start, end]));
+    lineFeature.setStyle(new Style({
+        stroke: new Stroke({
+            color: '#00e1ff',
+            width: 6
+        })
+    }));
+    source.addFeature(lineFeature);
+}
+
+const attribution = new Attribution({
+    collapsible: false,
+});
+
+const initializeMap = async () => {
+    const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+    const { latitude, longitude } = position.coords;
+
+    console.log('Current latitude:', latitude);
+    console.log('Current longitude:', longitude);
+
+    iconFeature = new Feature({
+        geometry: new Point(fromLonLat([longitude, latitude])),
+        name: 'Sijaintisi',
+    });
+
+    const iconStyle = new Style({
+        image: new Icon({
+            anchor: [0.5, 1],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'fraction',
+            src: Capacitor.convertFileSrc('marker_transparent.png'),
+            scale: 0.15,
+        }),
+    });
+
+    iconFeature.setStyle(iconStyle);
+
+    vectorSource = new VectorSource({
+        features: [iconFeature],
+    });
+
+    const vectorLayer = new VectorLayer({
+        source: vectorSource,
+    });
+
+    map = new Map({
+        target: document.getElementById('map'),
+        controls: defaultControls({ attribution: false }).extend([attribution]),
+        layers: [
+            new TileLayer({
+                source: new OSM(),
+            }),
+            vectorLayer,
+        ],
+        view: new View({
+            center: fromLonLat([longitude, latitude]),
+            zoom: 10,
+        }),
+    });
+
+    previousLocation = fromLonLat([longitude, latitude]);
+
+    function checkSize() {
+        const small = map.getSize()[0] < 600;
+        attribution.setCollapsible(small);
+        attribution.setCollapsed(small);
+    }
+
+    map.on('change:size', checkSize);
+    checkSize();
+
+};
+
+initializeMap().then(() => {
+    setInterval(async () => {
+        const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+        const { latitude, longitude } = position.coords;
+        const currentLocation = fromLonLat([longitude, latitude]);
+
+        const velocity = position.coords.speed;
+
+        const char4value = document.getElementById("char4");
+        if (velocity !== null) {
+            char4value.innerHTML = velocity.toFixed(2);
+        } else {
+            char4value.innerHTML = "null";
+        }
+
+        drawLine(vectorSource, previousLocation, currentLocation);
+
+        // Update the icon position
+        iconFeature.setGeometry(new Point(currentLocation));
+
+        previousLocation = currentLocation;
+    }, 1000);
+});
+
+
 
 let isConnected = false;
 function updateConnectionStatus() {
@@ -43,7 +165,7 @@ export async function connect() {
             "19B10003-E8F2-537E-4F6C-D104768A1214", // Characteristic UUID
             (value) => {
                 const receivedValue = value.getUint16(0, true);
-                console.log("Value received: ", receivedValue);
+                //console.log("Value received: ", receivedValue);
                 min = Math.min(min, receivedValue);
                 max = Math.max(max, receivedValue);
                 char1value.innerHTML = receivedValue.toString();
@@ -168,6 +290,44 @@ async function writeData3(red, green, blue) {
     );
 }
 
+async function writeData4(value) {
+    const bufferSize = 20;
+    const buffer = new ArrayBuffer(bufferSize);
+    const dataView = new DataView(buffer);
+
+    dataView.setUint16(0, value, true);
+
+    let byte1 = dataView.getUint8(0);
+    let byte2 = dataView.getUint8(1);
+
+    console.log("Sending bytes:", byte1, byte2);
+
+    const byteArray = new Uint8Array([byte1, byte2]);
+
+    await BleClient.write(
+        deviceObject.deviceId,
+        "19B10000-E8F2-537E-4F6C-D104768A1214",
+        "19B10006-E8F2-537E-4F6C-D104768A1214",
+        byteArray
+    );
+}
+
+async function writeData5(value) {
+    const bufferSize = 20;
+    const buffer = new ArrayBuffer(bufferSize);
+    const dataView = new DataView(buffer);
+
+    dataView.setUint16(0, value, true);
+
+    console.log("Sending data:", dataView.getUint8(0));
+
+    await BleClient.write(
+        deviceObject.deviceId,
+        "19B10000-E8F2-537E-4F6C-D104768A1214",
+        "19B10007-E8F2-537E-4F6C-D104768A1214",
+        dataView
+    );
+}
 
 function onDisconnect(deviceId) {
     console.log(`device ${deviceId} disconnected`);
@@ -189,12 +349,41 @@ toggle1.addEventListener('change', () => {
 const button1 = document.getElementById("button1");
 button1.addEventListener('click', () => {
     connect();
-})
+});
 
 const button2 = document.getElementById("button2");
 button2.addEventListener('click', () => {
     disConnect();
-})
+});
+
+const button3 = document.getElementById('button3');
+const infoBox = document.getElementById('infoBox');
+button3.addEventListener('click', (event) => {
+    console.log('Tietoa clicked');
+    infoBox.classList.add('visible');
+    event.stopPropagation(); // Prevents the event from bubbling up to the document
+});
+
+infoBox.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevents the event from bubbling up to the document
+});
+
+document.addEventListener('click', () => {
+    infoBox.classList.remove('visible');
+});
+
+// Get the slider and char5 elements
+const slider = document.getElementById('rangeslider');
+const char5 = document.getElementById('char5');
+
+// Add an input event listener to the slider
+slider.addEventListener('input', function() {
+    const mappedValue = Math.round((this.value / 255) * 100);
+    char5.textContent = mappedValue;
+    throttledWriteData5(this.value);
+});
+
+slider.dispatchEvent(new Event('input'));
 
 var colorPicker = new iro.ColorPicker(".colorPicker", {
     // color picker options
@@ -224,7 +413,9 @@ function throttle(func, limit) {
         }
     }
 }
+
 let throttledWriteData3 = throttle(writeData3, 300); // Adjust the delay as needed
+let throttledWriteData5 = throttle(writeData5, 100);
 
 // https://iro.js.org/guide.html#color-picker-events
 colorPicker.on(["color:init", "color:change"], function (color) {
@@ -260,12 +451,14 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
 
     // Get the value from the input field
     var inputValue = parseInt(document.getElementById("numberInput").value);
+    var inputValue2 = parseInt(document.getElementById("maxkierrokset").value);
 
     // Check if the input is a valid integer
-    if (Number.isInteger(inputValue) && inputValue < 65535) {
+    if (Number.isInteger(inputValue) && inputValue < 65535 && Number.isInteger(inputValue2) && inputValue2 < 65535) {
         // Input is a valid integer, call the writeData1 function with the input value
         try {
             await writeData1(inputValue);
+            await writeData4(inputValue2);
             document.getElementById("message").textContent = "Kierrokset kirjoitettu onnistuneesti.";
         } catch (error) {
             document.getElementById("message").textContent = "Virhe datan kirjoittamisessa: " + error.message;
