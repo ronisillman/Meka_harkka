@@ -191,7 +191,7 @@ input:checked+.slider:before {
 }
 
 .half {
-    width: 47.5%;
+    width: 42.7%;
     padding: 2px 0;
 }
 
@@ -199,7 +199,7 @@ input:checked+.slider:before {
     margin-top: 10px;
     line-height: 1.4;
     font-size: 1.0em;
-    width: 52.5%;
+    width: 57.5%;
     padding: 2px 0;
 }
 
