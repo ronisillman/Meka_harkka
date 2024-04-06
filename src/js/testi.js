@@ -424,7 +424,7 @@ var colorPicker = new iro.ColorPicker(".colorPicker", {
     // Option guide: https://iro.js.org/guide.html#color-picker-options
     width: 120,
     color: "rgb(0, 255, 0)",
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: "#fff",
 });
 
