@@ -15,7 +15,6 @@ import { Capacitor } from '@capacitor/core';
 import { Attribution, defaults as defaultControls } from 'ol/control.js';
 import LineString from 'ol/geom/LineString';
 import Stroke from 'ol/style/Stroke';
-import { getDistance as getSphereDistance } from 'ol/sphere';
 
 let previousLocation = null;
 let map = null;
@@ -97,31 +96,106 @@ const initializeMap = async () => {
 
 };
 
-initializeMap().then(() => {
-    setInterval(async () => {
-        const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
-        const { latitude, longitude } = position.coords;
-        const currentLocation = fromLonLat([longitude, latitude]);
+/* initializeMap().then(() => {
+    let watchId = null;
+    const message2 = document.getElementById('message2');
+    const mapDiv = document.getElementById('map');
+    mapDiv.style.display = "none"; // Hide the map initially
 
-        const velocity = position.coords.speed;
+    document.getElementById('button5').addEventListener('click', () => {
+        if (watchId === null) {
+            // Start watching position
+            watchId = Geolocation.watchPosition({ enableHighAccuracy: true }, async (position, error) => {
+                if (error) {
+                    message2.textContent = `Virhe: ${error.message}`;
+                    return;
+                }
 
-        const char4value = document.getElementById("char4");
-        if (velocity !== null) {
-            char4value.innerHTML = velocity.toFixed(2);
+                const { latitude, longitude } = position.coords;
+                const currentLocation = fromLonLat([longitude, latitude]);
+
+                const velocity = position.coords.speed;
+
+                const char4value = document.getElementById("char4");
+                if (velocity !== null) {
+                    char4value.innerHTML = velocity.toFixed(2);
+                } else {
+                    char4value.innerHTML = "null";
+                }
+
+                drawLine(vectorSource, previousLocation, currentLocation);
+
+                // Update the icon position
+                iconFeature.setGeometry(new Point(currentLocation));
+
+                previousLocation = currentLocation;
+
+                message2.textContent = "Kartta avattu.";
+                mapDiv.style.display = "block"; // Show the map
+            });
         } else {
-            char4value.innerHTML = "null";
+            // Stop watching position
+            Geolocation.clearWatch(watchId);
+            watchId = null;
+            message2.textContent = "Kartta suljettu.";
+            mapDiv.style.display = "none"; // Hide the map
         }
+    });
+}); */
 
-        drawLine(vectorSource, previousLocation, currentLocation);
+initializeMap().then(() => {
+    let watchId = null;
+    const message2 = document.getElementById('message2');
+    const mapDiv = document.getElementById('map');
+    mapDiv.style.display = "none"; // Hide the map initially
 
-        // Update the icon position
-        iconFeature.setGeometry(new Point(currentLocation));
+    document.getElementById('button5').addEventListener('click', () => {
+        if (watchId === null) {
+            // Start watching position
+            Geolocation.watchPosition({ enableHighAccuracy: true }, async (position, error) => {
+                if (error) {
+                    message2.textContent = `Virhe: ${error.message}`;
+                    return;
+                }
 
-        previousLocation = currentLocation;
-    }, 1000);
+                const { latitude, longitude } = position.coords;
+                const currentLocation = fromLonLat([longitude, latitude]);
+
+                const velocity = position.coords.speed;
+
+                const char4value = document.getElementById("char4");
+                if (velocity !== null) {
+                    char4value.innerHTML = velocity.toFixed(2);
+                } else {
+                    char4value.innerHTML = "null";
+                }
+
+                drawLine(vectorSource, previousLocation, currentLocation);
+
+                // Update the icon position
+                iconFeature.setGeometry(new Point(currentLocation));
+
+                previousLocation = currentLocation;
+
+                message2.textContent = "Kartta avattu.";
+                mapDiv.style.display = "block"; // Show the map
+            }).then(id => {
+                watchId = id;
+            }).catch(error => {
+                message2.textContent = `Virhe: ${error.message}`;
+            });
+        } else {
+            // Stop watching position
+            Geolocation.clearWatch({ id: watchId }).then(() => {
+                watchId = null;
+                message2.textContent = "Kartta suljettu.";
+                mapDiv.style.display = "none"; // Hide the map
+            }).catch(error => {
+                message2.textContent = `Virhe: ${error.message}`;
+            });
+        }
+    });
 });
-
-
 
 let isConnected = false;
 function updateConnectionStatus() {

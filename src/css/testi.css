@@ -359,6 +359,7 @@ input[type="submit"]:hover {
     height: 80vh;
     width: 100%;
     font-family: sans-serif;
+    display: none;
 }
 
 table {
@@ -436,6 +437,21 @@ td:nth-child(3), th:nth-child(3) {
     top: -15px; 
     left: -10px;
   }
+
+  #button5 img {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    left: 10px;
+    top: 3px;
+    filter: invert(1) brightness(0.9);
+}
+
+#button5 {
+    margin-top: 0px;
+    width: 35%;
+    padding-top: 1%;
+}
 
  .dark-mode {
     background-color: rgb(59, 59, 59);
