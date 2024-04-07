@@ -56,6 +56,9 @@ body {
 /* Float the link section to the right */
 .header-right {
     float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -185,26 +188,25 @@ input:checked+.slider:before {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
 
-    .half {
-        width: 60%;
-        padding: 8px 0;
-        /* Reduced the vertical padding */
-    }
+.half {
+    width: 42.7%;
+    padding: 2px 0;
 }
 
 .readout {
     margin-top: 10px;
     line-height: 1.4;
     font-size: 1.0em;
-    color: #333;
+    width: 57.5%;
+    padding: 2px 0;
 }
 
 #values {
     font-family: 'Courier New', monospace;
     line-height: 1.5;
     font-size: 1.0em;
-    color: #333;
 }
 
 #hexInput {
@@ -246,7 +248,7 @@ label {
 
 input[type="submit"] {
     background-color: #4CAF50;
-    color: white;
+    color: rgb(255, 255, 255);
     padding: 4px;
     margin: 2px 0;
     border: none;
@@ -264,7 +266,7 @@ input[type="submit"]:hover {
 #char3,
 #char4 {
     font-family: 'Courier New', monospace;
-    background-color: #f8f8f8;
+    background-color: #ffffff;
     padding: 0 10px;
     border-radius: 5px;
     color: #333;
@@ -289,7 +291,7 @@ input[type="submit"]:hover {
     /* Green background */
     border: none;
     /* Remove borders */
-    color: white;
+    color: rgb(255, 255, 255);
     /* White text */
     padding: 8px 10px;
     /* Some padding */
@@ -386,7 +388,7 @@ td:nth-child(3), th:nth-child(3) {
     margin-top: 20px;
     margin-bottom: 30px;
     display: grid;
-    grid-template-columns: 147px 55px 16px auto; /* Adjust as needed */
+    grid-template-columns: 138px 55px 16px auto; /* Adjust as needed */
     gap: 15px; /* Adjust as needed */
     width: 90%;
     align-items: center;
@@ -397,7 +399,7 @@ td:nth-child(3), th:nth-child(3) {
 
     -webkit-appearance: none; /* Override default CSS styles */
     appearance: none;
-    width: 76%; /* Full width */
+    width: 80%; /* Full width */
     height: 15px; /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
@@ -420,3 +422,49 @@ td:nth-child(3), th:nth-child(3) {
     background: #2196F3;; /* Green background */
     cursor: pointer; /* Cursor on hover */
   }
+
+ #button4 {
+    all: unset;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    background: none;
+    height: 0px;
+    width: 30px; 
+
+    position: relative;
+    top: -15px; 
+    left: -10px;
+  }
+
+ .dark-mode {
+    background-color: rgb(59, 59, 59);
+    color: rgb(160, 160, 160);
+}
+
+.dark-mode .map {
+    filter: brightness(70%);
+}
+
+.dark-mode .buttons,
+.dark-mode .submit-button {
+    color: #d3d3d3;
+}
+
+.dark-mode .info-box,
+.dark-mode #char1,
+.dark-mode #char2,
+.dark-mode #char3,
+.dark-mode #char4,
+.dark-mode .input {
+    background-color: rgb(59, 59, 59);
+    color: rgb(160, 160, 160);
+}
+
+.dark-mode #rangeslider {
+    background: rgb(160, 160, 160);
+}
+
+.dark-mode .slider:before {
+    background-color: rgb(160, 160, 160);
+}
