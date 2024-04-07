@@ -96,53 +96,6 @@ const initializeMap = async () => {
 
 };
 
-/* initializeMap().then(() => {
-    let watchId = null;
-    const message2 = document.getElementById('message2');
-    const mapDiv = document.getElementById('map');
-    mapDiv.style.display = "none"; // Hide the map initially
-
-    document.getElementById('button5').addEventListener('click', () => {
-        if (watchId === null) {
-            // Start watching position
-            watchId = Geolocation.watchPosition({ enableHighAccuracy: true }, async (position, error) => {
-                if (error) {
-                    message2.textContent = `Virhe: ${error.message}`;
-                    return;
-                }
-
-                const { latitude, longitude } = position.coords;
-                const currentLocation = fromLonLat([longitude, latitude]);
-
-                const velocity = position.coords.speed;
-
-                const char4value = document.getElementById("char4");
-                if (velocity !== null) {
-                    char4value.innerHTML = velocity.toFixed(2);
-                } else {
-                    char4value.innerHTML = "null";
-                }
-
-                drawLine(vectorSource, previousLocation, currentLocation);
-
-                // Update the icon position
-                iconFeature.setGeometry(new Point(currentLocation));
-
-                previousLocation = currentLocation;
-
-                message2.textContent = "Kartta avattu.";
-                mapDiv.style.display = "block"; // Show the map
-            });
-        } else {
-            // Stop watching position
-            Geolocation.clearWatch(watchId);
-            watchId = null;
-            message2.textContent = "Kartta suljettu.";
-            mapDiv.style.display = "none"; // Hide the map
-        }
-    });
-}); */
-
 initializeMap().then(() => {
     let watchId = null;
     const message2 = document.getElementById('message2');
