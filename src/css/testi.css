@@ -438,13 +438,13 @@ td:nth-child(3), th:nth-child(3) {
     left: -10px;
   }
 
-  #button5 img {
+#button5 img {
     width: 20px;
     height: 20px;
     position: relative;
     left: 10px;
     top: 3px;
-    filter: invert(1) brightness(0.9);
+    filter: invert(1) brightness(1);
 }
 
 #button5 {
@@ -483,4 +483,8 @@ td:nth-child(3), th:nth-child(3) {
 
 .dark-mode .slider:before {
     background-color: rgb(160, 160, 160);
+}
+
+.dark-mode #button5 img {
+    filter: invert(1) brightness(0.9);
 }
