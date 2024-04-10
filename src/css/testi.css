@@ -382,7 +382,7 @@ td:nth-child(2), th:nth-child(2) {
 }
 
 td:nth-child(3), th:nth-child(3) {
-    width: 30px; /* Width of the third column */
+    width: 38px; /* Width of the third column */
 }
 
 .slider-container {

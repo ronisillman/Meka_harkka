@@ -10,7 +10,7 @@
 rtos::Thread t1;
 rtos::Thread t2;
 rtos::Thread t3;
-rtos::Thread t4;
+//rtos::Thread t4;  NOT NEEDED FOR DEMO
 
 // Bluetooth **************
 BLEService kierrosmittari("19B10000-E8F2-537E-4F6C-D104768A1214"); // Bluetooth® Low Energy LED Service
@@ -27,10 +27,9 @@ uint16_t tyhjakierrokset;
 uint16_t tallennus;
 bool prev_tallennus = 0;
 volatile bool runThread = false;
-uint16_t dataToSend = 1;
 uint32_t RGB_data;
 uint16_t kierrokset_max;
-uint16_t kirkkaus_data;
+uint16_t kirkkaus_data = 128;
 
 // SD  **************
 File myFile;
@@ -45,8 +44,8 @@ String aika_arvo;
 #define NUMPIXELS 16 // number of neopixels in strip
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-int redColor = 255;
-int greenColor = 0;
+int redColor = 0;
+int greenColor = 255;
 int blueColor = 0;
 
 // Interrupt ja revs *********
@@ -75,7 +74,6 @@ void calculate_revs() {
     } 
     attachInterrupt(digitalPinToInterrupt(pin_interrupt), readData, RISING);  
     a = millis();  
-    Serial.println(revs); 
   }
 }
 
@@ -84,8 +82,6 @@ void sendData() {
     BLEDevice central = BLE.central();
     if (central) {
       while (central.connected()) {
-          //send data
-          //dataToSend++;
           lahetakierros.writeValue(revs);
           delay(500);
       }
@@ -108,31 +104,16 @@ void led() {
       pixels.show();
       delay(200);
     } else {
-      /*
       for (int i = 0; i < NUMPIXELS; i++) {
-        if (revs > ((kierrokset_max - tyhjakierrokset)  /  NUMPIXELS* (i + 1) + tyhjakierrokset)) { 
-          if (i < 12) {
-            pixels.setPixelColor(i, pixels.Color(0, 255, 0));
-          } else if (i < 14) {
-            pixels.setPixelColor(i, pixels.Color(255, 165, 0));
-          } else {
-            pixels.setPixelColor(i, pixels.Color(255, 0, 0));
-          }
-          pixels.show();
-        } else {
-          pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-          pixels.show();
-        }
-      }
-    } */
-      for (int i = 0; i < NUMPIXELS; i++) {
-        if (tyhjäkierrokset > kierrokset_max /  NUMPIXELS* (i + 1)) { 
+        if (tyhjakierrokset >= (kierrokset_max / NUMPIXELS * i)) { 
           pixels.setPixelColor(i, pixels.Color(redColor, greenColor, blueColor));
+          //pixels.show();
         } else {
           pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-          pixels.show();
+          //pixels.show();
         }
       }
+      pixels.show();
     } 
   }
 }
@@ -280,7 +261,7 @@ void setup() {
   // Interupt 
   pinMode(pin_interrupt, INPUT);
   attachInterrupt(digitalPinToInterrupt(pin_interrupt), readData, RISING);
-  t4.start(calculate_revs);
+  //t4.start(calculate_revs); NOT NEEDED FOR DEMO
 }
 
 void loop() {

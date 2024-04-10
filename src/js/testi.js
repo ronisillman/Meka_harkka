@@ -118,7 +118,7 @@ initializeMap().then(() => {
 
                 const char4value = document.getElementById("char4");
                 if (velocity !== null) {
-                    char4value.innerHTML = velocity.toFixed(2);
+                    char4value.innerHTML = (velocity * 3.6).toFixed(1);
                 } else {
                     char4value.innerHTML = "null";
                 }
@@ -475,8 +475,8 @@ function throttle(func, limit) {
     }
 }
 
-let throttledWriteData3 = throttle(writeData3, 300); // Adjust the delay as needed
-let throttledWriteData5 = throttle(writeData5, 100);
+let throttledWriteData3 = throttle(writeData3, 100); // Adjust the delay as needed
+let throttledWriteData5 = throttle(writeData5, 50);
 
 // https://iro.js.org/guide.html#color-picker-events
 colorPicker.on(["color:init", "color:change"], function (color) {
