@@ -107,10 +107,8 @@ void led() {
       for (int i = 0; i < NUMPIXELS; i++) {
         if (tyhjakierrokset >= (kierrokset_max / NUMPIXELS * i)) { 
           pixels.setPixelColor(i, pixels.Color(redColor, greenColor, blueColor));
-          //pixels.show();
         } else {
           pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-          //pixels.show();
         }
       }
       pixels.show();

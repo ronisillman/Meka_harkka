@@ -27,10 +27,9 @@ uint16_t tyhjakierrokset;
 uint16_t tallennus;
 bool prev_tallennus = 0;
 volatile bool runThread = false;
-uint16_t dataToSend = 1;
 uint32_t RGB_data;
 uint16_t kierrokset_max;
-uint16_t kirkkaus_data;
+uint16_t kirkkaus_data = 128;
 
 // SD  **************
 File myFile;
@@ -45,8 +44,8 @@ String aika_arvo;
 #define NUMPIXELS 16 // number of neopixels in strip
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-int redColor = 255;
-int greenColor = 0;
+int redColor = 0;
+int greenColor = 255;
 int blueColor = 0;
 
 // Interrupt ja revs *********
@@ -54,6 +53,7 @@ int blueColor = 0;
 
 volatile int pulses;
 float revs;
+float mean_revs;
 unsigned long a = 0;
 unsigned long b;
 
@@ -62,9 +62,10 @@ void readData() {
 }
 
 void calculate_revs() {
+  float prev_revs = 0;
   while (true) {
     pulses = 0;  
-    delay(500);  
+    delay(250);  
     b = millis();  
     detachInterrupt(digitalPinToInterrupt(pin_interrupt)); 
     if (pulses > 0) { 
@@ -73,9 +74,14 @@ void calculate_revs() {
     else { 
       revs = 0; 
     } 
+
+    mean_revs = (revs + prev_revs) / 2;
+
     attachInterrupt(digitalPinToInterrupt(pin_interrupt), readData, RISING);  
     a = millis();  
-    Serial.println(revs); 
+    Serial.println(mean_revs); 
+
+    prev_revs = revs;
   }
 }
 
@@ -84,9 +90,7 @@ void sendData() {
     BLEDevice central = BLE.central();
     if (central) {
       while (central.connected()) {
-          //send data
-          //dataToSend++;
-          lahetakierros.writeValue(revs);
+          lahetakierros.writeValue(mean_revs);
           delay(500);
       }
     }
@@ -96,7 +100,7 @@ void sendData() {
 void led() {
   while(true) {
     pixels.setBrightness(kirkkaus_data);
-    if (revs > (kierrokset_max - 200)) { 
+    if (revs > (kierrokset_max - 200)) {  //Might need adjusting
       for (int i = 0; i < NUMPIXELS; i++) {
         pixels.setPixelColor(i, pixels.Color(255, 0, 0));
       }
@@ -108,31 +112,14 @@ void led() {
       pixels.show();
       delay(200);
     } else {
-      /*
       for (int i = 0; i < NUMPIXELS; i++) {
-        if (revs > ((kierrokset_max - tyhjakierrokset)  /  NUMPIXELS* (i + 1) + tyhjakierrokset)) { 
-          if (i < 12) {
-            pixels.setPixelColor(i, pixels.Color(0, 255, 0));
-          } else if (i < 14) {
-            pixels.setPixelColor(i, pixels.Color(255, 165, 0));
-          } else {
-            pixels.setPixelColor(i, pixels.Color(255, 0, 0));
-          }
-          pixels.show();
-        } else {
-          pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-          pixels.show();
-        }
-      }
-    } */
-      for (int i = 0; i < NUMPIXELS; i++) {
-        if (revs > ((kierrokset_max - tyhjakierrokset)  /  NUMPIXELS* (i + 1) + tyhjakierrokset)) { 
+        if (revs >= ((kierrokset_max - tyhjakierrokset)  /  NUMPIXELS * i + tyhjakierrokset)) {   //Might need adjusting
           pixels.setPixelColor(i, pixels.Color(redColor, greenColor, blueColor));
         } else {
           pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-          pixels.show();
         }
       }
+      pixels.show();
     } 
   }
 }
