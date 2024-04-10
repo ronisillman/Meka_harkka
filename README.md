@@ -10,8 +10,8 @@ Motorcycle tachometer
 
 Signal connection diagram. The signal is taken from the motorcycle's ignition coil supply.
 
-![Alt text](resources\Tiedonkeruupiiri.jpg)
+![Alt text](/resources/Tiedonkeruupiiri.jpg)
 
 Finished mobile application version 3.1:
 
-![Alt text](resources\appi.PNG)
+![Alt text](/resources/appi.PNG)
